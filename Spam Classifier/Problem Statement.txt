@@ -1,0 +1,30 @@
+6.	Download the zipped folder enronfiles.zip (posted on Blackboard with this homework).  This folder contains a preprocessed dataset of emails, labeled according to whether they are spam or ham (non-spam).  The emails were written by employees at the Enron corporation, and were collected during the legal investigation into the Enron scandal.  The emails became public because they were part of the court record.  There are very few datasets containing real emails that are publicly available (because most people don’t want to release their private emails), so researchers in text processing began using the Enron dataset for research.  
+The files in enronfiles.zip do not include the original emails.  The emails were processed and a vocabulary of terms appearing in the emails was compiled.  Let W be the number of terms in the vocabulary.  One file contains a Wx1 character array containing the terms in the vocabulary, stored as strings.  
+The emails were divided into three sets, train, validation, and test.   For each of these sets, there are two files, one with information about the words appearing in the emails in that set, and one with information about the labels of those emails.  The file with the term (feature) information contains a DxW matrix, in sparse format, where D is the number of emails in the set.   Each row of the matrix corresponds to an email in the set, each column corresponds to a vocabulary term, and entry [i,j] of the matrix contains the number of occurences of vocabulary term j in email number i in the set.  The file with the label information contains a Dx1 matrix where the ith entry is 1 if email number i is spam, and 0 if it is ham.  
+a.	Open the files in Matlab or Octave. 
+i.	 How many words are in the vocabulary?  
+ii.	Look at the first 50 terms in the vocabulary.  Are they all words?
+iii.	What percentage of training documents are spam?  What percent are not spam?
+iv.	What percentage of validation documents are spam?  
+v.	What percentage of test documents are spam?
+vi.	Are there any terms in the vocabulary that do not occur in any of the training documents?
+vii.	How often does the word “success” appear in training documents that are labeled as spam?
+viii.	What fraction of the spam documents contain the word “success”?
+
+b.	Write a Matlab or Octave program that implements multinomial Naïve Bayes, as described in Problem 5.  Train it on the examples in the training set and test it on the documents in the TEST set.  Also test it on the documents in the TRAINING set.  Do this twice, first using no smoothing, and then using add-k smoothing with k=0.1 to estimate the values for P(w_i|C).  
+
+Hint:  To avoid underflow problems, compute log likelihoods, log P(D|C), instead of computing P(D|C) directly.  Also, before applying the log function, you may want to threshold all probabilities to be no smaller than Matlab's eps constant (that is, before applying the log function to a value that is less than eps, replace the value by eps.)  
+
+i.	 What percent accuracy did you obtain on the TRAINING set (accuracy = 1 – error) with no smoothing.
+ii.	What percent accuracy did you obtain on the TEST set with no smoothing?
+iii.	What percent accuracy did you obtain on the TRAINING set with smoothing.
+iv.	What percent accuracy did you obtain on the TEST set with smoothing.
+v.	Was your TEST accuracy better with smoothing or without smoothing?  Is this what we would generally expect to happen?
+vi.	 In general, we expect to get higher accuracy on the TRAINING set than on the TEST set.  Is this what you observed without smoothing?  Is this what you observed with smoothing?     
+
+c.	Sometimes it is helpful to reduce the size of the vocabulary, and keep only the v most “important” terms, for some v.  One way of measuring the importance of a term is to compute its information gain.  Compute the information gain for all the words in the vocabulary, with respect to the TRAINING set.
+i.	What is the information gain of the term “success”?
+ii.	Which 10 terms have the highest information gain?
+iii.	 Do the following experiment with v=10, 50, 100, 200:  Reduce the size of the vocabulary by keeping the top v terms with the highest information gain on the TRAINING set.   Run your Multinomial Naïve Bayes program on the training set again, with the vocabulary of size v, and test it on the VALIDATION set.  For your smoothing method, use add-k smoothing with k=0.1.  Report the accuracy you obtain on the VALIDATION set.  
+iv.	Validation sets are often used to decide on the settings of parameters of a learning algorithm.  Choose the value of v that resulted in the highest accuracy on the validation set in part iii.  Run Multinomial Naïve Bayes again with this value of v only, but this time, report the accuracy you obtain on the TEST set.
+                           
